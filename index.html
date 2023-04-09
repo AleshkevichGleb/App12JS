@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="app">
+        <div class="container">
+            <form class="container__create">
+                <input type="text"  maxlength="20"  class = "container__input" name = "name" value = "Bob" placeholder="name">
+                <input type="text" maxlength="30" class = "container__input" name = "email" value = "example@gmail.com" placeholder="email">
+                <input type="text" maxlength="30" class = "container__input" name = "address" value = "Minsk" placeholder="address">
+                <input type="tel" maxlength="20"  class = "container__input" name = "phone" value = "+3752923324" placeholder="+3752920...">
+                <button type = "submit" class = "button createButton">Create contact</button>
+            </form>
+            <div class="container__list">
+                <h3>My contacts</h3>
+                <div class = "container__contact"></div>
+            </div>
+        </div>
+    </div>
+    <script src = "script.js"></script>
+</body>
+</html>

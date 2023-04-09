@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.container {
+    display: flex;
+    margin: 50px;
+}
+
+.container__create {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.container__input {
+    margin: 5px;
+    width: 250px;
+    height: 35px;
+    padding: 5px;
+    border: 1px solid #661b;
+    border-radius: 5px;
+}
+
+.button {
+    margin: 5px;
+    height: 40px;
+    background-color: cadetblue;
+    color:#fff;
+    border: none;
+    border-radius: 5px;
+}
+
+.container__fieldForButton {
+    display: flex;
+    justify-content: center;
+}
+
+.removeButton{
+    min-width: 40%;
+}
+
+.editButton {
+    min-width: 40%;
+}
+.container__list {
+    border: 1px solid rgb(140, 230, 219);
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5px;
+    min-width: 300px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y:auto;
+    overflow-x: hidden;
+}
+
+.container__contact {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container__fieldForContact {
+    border: 1px solid rgb(115, 158, 205);
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px 0;
+}
+
+.container__fieldForButton {
+    width: 100%;
+}
+
+.container__fieldForContact span {
+    margin: 5px;
+}
