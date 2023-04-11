@@ -71,34 +71,30 @@ let contact = new Contacts();
 class ContactsApp extends Contacts {
     constructor() {
         super();
-        this.localData = window.localStorage.getItem('contacts');
         this.id = 1;
         this.render();
     }
     
-    get storage() {
-        return this.localData;
+    setCookie(name, value) {
+        let date = new Date();
+        date.setDate(date.getDate() + 10);
+        document.cookie = `${name}=${value};path=/;expires=${date}`;
     }
 
-    set storage(localData) {
-
+    handleLocalStorage() {
+        if(!this.data.length) {
+            return localStorage.removeItem('contacts');
+        } else {
+            localStorage.setItem('contatcs', JSON.stringify(this.data));
+            this.setCookie('storageExpiration', 'true');
+        }
     }
 
     render() {
-        if(this.localData && this.localData.length > 0) {
-            this.arrLocalData = JSON.parse(this.localData);
-            this.arrLocalData.forEach(contact => {
-                this.onAdd(contact);
-                super.add(contact);
-            }) 
-        }
-
         const container = document.querySelector('.container__create');
 
         container.addEventListener('submit', event => {
             event.preventDefault();
-
-            window.location.reload();
 
             const {elements} = container;
             this.contactData = {};
@@ -112,17 +108,11 @@ class ContactsApp extends Contacts {
                 element.value = ''
             })
 
+
             super.add(this.contactData);
-
-            let date = new Date(Date.now() + 20000)
-            date = date.toUTCString();
-            window.localStorage.setItem('contacts', JSON.stringify(this.data));
-            document.cookie = `storageExpiration=${encodeURIComponent(window.localStorage.getItem('contacts'))};expires=`+ date;
-            // document.cookie='storageExpiration=; max-age=-1'
-
-            // document.cookie = 'name=John; expires=' + date;
-            // document.cookie = 'name=; max-age=-1'
             this.onAdd(this.contactData);
+
+            this.handleLocalStorage();
         })
     }
 
@@ -168,18 +158,14 @@ class ContactsApp extends Contacts {
         this.fieldForContact.setAttribute('id', this.id);
         this.id++;
 
-    
-
         containerContact.prepend(this.fieldForContact);
 
         this.butttonsRemove = document.querySelectorAll('.removeButton');
         this.buttonsEdit = document.querySelectorAll('.editButton');
 
-        
-        
-
         this.onRemove();
         this.onEdit(this.nameContact, this.phoneContact, this.emailContact, this.addressContact);
+        this.handleLocalStorage();
        
     }
 
@@ -188,26 +174,12 @@ class ContactsApp extends Contacts {
             const {target} = event;
 
             this.containerParent = target.closest('.container__fieldForContact')
-            console.log(this.containerParent);
-
             let objIndex = this.arrLocalData.findIndex(obj => obj.id == Number(this.containerParent.getAttribute('id')));
-
-            // let objIndex = this.arrLocalData.findIndex(obj => obj.name == this.nameContact.innerHTML && obj.phone == this.phoneContact.innerHTML && 
-            //                                                   obj.email == this.emailContact.innerHTML && obj.address == this.addressContact.innerHTML);
-
-            this.arrLocalData.forEach(obj => {
-                console.log(obj.id == 1);
-            })
-
-            console.log(this.containerParent.getAttribute('id'), typeof this.containerParent.getAttribute('id'));
-            console.log(this.containerParent);
-            console.log(objIndex);
             this.arrLocalData.splice(objIndex, 1);
             window.localStorage.setItem('contacts', JSON.stringify(this.arrLocalData));
-
             this.containerParent.remove();
             super.remove(+this.containerParent.id)
-            console.log(this.arrLocalData);
+            this.handleLocalStorage();
        })
 
     }
@@ -223,36 +195,17 @@ class ContactsApp extends Contacts {
             const newContact = {};
             const containerParent = target.closest('.container__fieldForContact')
 
-            console.log(this.arrLocalData);
-            let objIndex = this.arrLocalData.findIndex(obj => obj.name = nameContact.innerHTML);
-            nameContact.innerHTML = newContact.name = prompt('Name', nameContact.innerHTML)|| nameContact.innerHTML;
-            this.arrLocalData[objIndex].name = newContact.name;
-
-            objIndex = this.arrLocalData.findIndex(obj => obj.phone = phoneContact.innerHTML);
+           
+            nameContact.innerHTML = newContact.name = prompt('Name', nameContact.innerHTML)|| nameContact.innerHTML;              
             phoneContact.innerHTML = newContact.phone = prompt('Phone', phoneContact.innerHTML)|| phoneContact.innerHTML;
-            this.arrLocalData[objIndex].phone = newContact.phone;
-
-            objIndex = this.arrLocalData.findIndex(obj => obj.email = emailContact.innerHTML);
             emailContact.innerHTML = newContact.email = prompt('Email', emailContact.innerHTML) || emailContact.innerHTML;
-            this.arrLocalData[objIndex].email = newContact.email;
-
-            objIndex = this.arrLocalData.findIndex(obj => obj.address = addressContact.innerHTML);
             addressContact.innerHTML = newContact.address = prompt('City', addressContact.innerHTML)|| addressContact.innerHTML;
-            this.arrLocalData[objIndex].address = newContact.address;
-
-
-            window.localStorage.setItem('contacts', JSON.stringify(this.arrLocalData));
 
             super.edit(+containerParent.id, newContact);
+            this.handleLocalStorage();
         })
     }
 }
 
     
 const contactApp = new ContactsApp();
-console.log(contactApp.storage);
-
-// console.log(contactApp);
-
-
-
