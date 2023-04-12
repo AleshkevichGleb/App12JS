@@ -85,7 +85,7 @@ class ContactsApp extends Contacts {
         if(!this.data.length) {
             return localStorage.removeItem('contacts');
         } else {
-            localStorage.setItem('contatcs', JSON.stringify(this.data));
+            localStorage.setItem('contacts', JSON.stringify(this.data));
             this.setCookie('storageExpiration', 'true');
         }
     }
@@ -174,9 +174,6 @@ class ContactsApp extends Contacts {
             const {target} = event;
 
             this.containerParent = target.closest('.container__fieldForContact')
-            let objIndex = this.arrLocalData.findIndex(obj => obj.id == Number(this.containerParent.getAttribute('id')));
-            this.arrLocalData.splice(objIndex, 1);
-            window.localStorage.setItem('contacts', JSON.stringify(this.arrLocalData));
             this.containerParent.remove();
             super.remove(+this.containerParent.id)
             this.handleLocalStorage();
